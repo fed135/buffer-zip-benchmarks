@@ -1,5 +1,19 @@
-var yamlish = require('yamlish');
-var yaml = require('js-yaml');
+/**
+ * Benchmarking different transport protocols
+ *
+ * 1- JSON  
+ * 2- Yamlish - disqualified
+ * 3- Yaml - disqualified
+ * 4- Universal Binary JSON
+ */
+
+'use strict';
+
+/* Requires ------------------------------------------------------------------*/
+
+var UBJ = require('ubjson');
+
+/* Local variables -----------------------------------------------------------*/
 
 var baseObj = {
 	foa: 'bar',
@@ -9,54 +23,47 @@ var baseObj = {
 	foe: {a: 'bar', b: 1, c:null, d:['bar', 1, null, { foo: 'bar'}]},
 	inc: null
 };
-var result, result2, result3;
+var i, startTime, result, result4, runs = 256*256, offset;
 
-//YAML-ish VS JSON
-//Part 1: speed
+/* Part 1: speed -------------------------------------------------------------*/
 
-var startTime = Date.now();
-for(var i = 0; i<10000; i++) {
+// Serialize, then unserialize
+
+// JSON
+startTime = Date.now();
+for(i = 0; i<runs; i++) {
 	baseObj.inc = i;
 	result = JSON.parse(JSON.stringify(baseObj));
 }
-console.log('JSON speed: ' + (Date.now() - startTime));
+console.log('JSON speed: ' + (Date.now() - startTime) + 'ms');
 console.log('=====================================');
 
-var startTime = Date.now();
-for(var i = 0; i<10000; i++) {
+// UBJSON
+startTime = Date.now();
+for(i = 0; i<runs; i++) {
 	baseObj.inc = i;
-	result2 = yamlish.decode(yamlish.encode(baseObj));
+	result4 = new Buffer(1024);
+	UBJ.packToBufferSync(baseObj, result4);
+	//should add the unpacking time, but we already get an order of idea
+  result4 = UBJ.unpackBuffer(result4, function(){});
 }
-console.log('Yamlish speed: ' + (Date.now() - startTime));
-console.log('=====================================');
+console.log('UBJSON speed: ' + (Date.now() - startTime) + 'ms');
+console.log('');
 
-var startTime = Date.now();
-for(var i = 0; i<10000; i++) {
-	baseObj.inc = i;
-	result3 = yaml.load(yaml.dump(baseObj));
-}
-console.log('Yaml speed: ' + (Date.now() - startTime));
-console.log('=====================================');
 
-//Part 2: Size
+/* Part 2: Size --------------------------------------------------------------*/
 
-console.log('JSON:');
-console.log(
-	(
+// Check serialized object's binary size
+
+console.log('JSON size: ' + (
 		new Buffer(JSON.stringify(baseObj))
-	).length
+	).length + ' bytes'
 );
+console.log('=====================================');
 
-console.log('Yamlish:');
-console.log(
-	(
-		new Buffer(yamlish.encode(baseObj))
-	).length
-);
+result4 = new Buffer(1024);
+offset = UBJ.packToBufferSync(baseObj, result4);
+result4 = result4.slice(0, offset);
+console.log('UBJSON size: ' + result4.length + ' bytes');
 
-console.log('Yaml:');
-console.log(
-	(
-		new Buffer(yaml.dump(baseObj))
-	).length
-);
+process.exit();
