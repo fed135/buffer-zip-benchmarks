@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "js-yaml": "^3.4.3",
-    "yamlish": "0.0.7"
+    "ubjson": "0.0.8"
   }
 }
