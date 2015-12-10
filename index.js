@@ -1,17 +1,12 @@
 /**
  * Benchmarking different transport protocols
- *
- * 1- JSON  
- * 2- Yamlish - disqualified
- * 3- Yaml - disqualified
- * 4- Universal Binary JSON
  */
 
 'use strict';
 
 /* Requires ------------------------------------------------------------------*/
 
-var UBJ = require('ubjson');
+var protocols = require('./protocols');
 
 /* Local variables -----------------------------------------------------------*/
 
@@ -23,47 +18,38 @@ var baseObj = {
 	foe: {a: 'bar', b: 1, c:null, d:['bar', 1, null, { foo: 'bar'}]},
 	inc: null
 };
-var i, startTime, result, result4, runs = 256*256, offset;
+var runs = 256*256;
 
-/* Part 1: speed -------------------------------------------------------------*/
+/* Methods -------------------------------------------------------------------*/
 
-// Serialize, then unserialize
+/**
+ * Runs the tests for a given protocol
+ */
+function testProtocol(p) {
+	var i;
+	var res;
+	var ret;
+	var startTime = Date.now();
+	var eT = 0;
 
-// JSON
-startTime = Date.now();
-for(i = 0; i<runs; i++) {
-	baseObj.inc = i;
-	result = JSON.parse(JSON.stringify(baseObj));
+	//Serialize
+	for(i = 0; i<runs; i++) {
+		baseObj.inc = i;
+		res = protocols[p].encode(baseObj);
+	}
+	eT = Date.now();
+
+	for(i = 0; i<runs; i++) {
+		baseObj.inc = i;
+		res = protocols[p].encode(baseObj);
+		ret = protocols[p].decode(res);
+	}
+
+	console.log(p + ':\n');
+	console.log('Encode:\t' + (eT - startTime) + '\tms');
+	console.log('Decode:\t' + (Date.now() - eT - (eT - startTime)) + '\tms');
+	console.log('Size:\t' + res.length + '\tbytes');
+	console.log('-----------------------------------\n');
 }
-console.log('JSON speed: ' + (Date.now() - startTime) + 'ms');
-console.log('=====================================');
 
-// UBJSON
-startTime = Date.now();
-for(i = 0; i<runs; i++) {
-	baseObj.inc = i;
-	result4 = new Buffer(1024);
-	UBJ.packToBufferSync(baseObj, result4);
-	//should add the unpacking time, but we already get an order of idea
-  result4 = UBJ.unpackBuffer(result4, function(){});
-}
-console.log('UBJSON speed: ' + (Date.now() - startTime) + 'ms');
-console.log('');
-
-
-/* Part 2: Size --------------------------------------------------------------*/
-
-// Check serialized object's binary size
-
-console.log('JSON size: ' + (
-		new Buffer(JSON.stringify(baseObj))
-	).length + ' bytes'
-);
-console.log('=====================================');
-
-result4 = new Buffer(1024);
-offset = UBJ.packToBufferSync(baseObj, result4);
-result4 = result4.slice(0, offset);
-console.log('UBJSON size: ' + result4.length + ' bytes');
-
-process.exit();
+Object.keys(protocols).forEach(testProtocol);

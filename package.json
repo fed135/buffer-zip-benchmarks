@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "msgpack-lite": "^0.1.13",
     "ubjson": "0.0.8"
   }
 }

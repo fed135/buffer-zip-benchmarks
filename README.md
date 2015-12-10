@@ -1,19 +1,25 @@
-# ubjson-benchmark
+# binary json benchmark
 A quick benchmark to test which is the fastest and the lightest.
 The goal being to find the best transport protocol for the Kalm framework.
 
 ## Results
 
-- Ubuntu 15.10
-- Node 5.0.0
-- e5-1650 @ 3.20
+json:
 
-### JSON 
+Encode:	733	ms
+Decode:	738	ms
+Size:	145	bytes
+-----------------------------------
 
-* speed: 369 ms
-* size: 144 bytes
+msgpack:
 
-### UBJSON
+Encode:	1555	ms
+Decode:	1570	ms
+Size:	81	bytes
+-----------------------------------
 
-* speed 2713 ms
-* size 11 bytes
+ubjson:
+
+Encode:	5341	ms
+Decode:	3218	ms
+Size:	111	bytes
