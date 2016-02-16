@@ -2,6 +2,12 @@
 
 A quick benchmark to test which is the fastest and the lightest.
 
+## Test
+
+- Encode a complex object
+- Decode it
+- Do it (256 * 256) times
+
 ## Results
 
 ### json
