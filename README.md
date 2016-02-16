@@ -1,25 +1,27 @@
 # binary json benchmark
+
 A quick benchmark to test which is the fastest and the lightest.
-The goal being to find the best transport protocol for the Kalm framework.
 
 ## Results
 
-json:
+### json
 
-Encode:	733	ms
-Decode:	738	ms
-Size:	145	bytes
+- Encode:	733	ms
+- Decode:	738	ms
+- Size:	145	bytes
+
 -----------------------------------
 
-msgpack:
+### msgpack
 
-Encode:	1555	ms
-Decode:	1570	ms
-Size:	81	bytes
+- Encode:	1555	ms
+- Decode:	1570	ms
+- Size:	81	bytes
+
 -----------------------------------
 
-ubjson:
+### ubjson:
 
-Encode:	5341	ms
-Decode:	3218	ms
-Size:	111	bytes
+- Encode:	5341	ms
+- Decode:	3218	ms
+- Size:	111	bytes
