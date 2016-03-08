@@ -1,5 +1,5 @@
 {
-  "name": "yamlish-benchmark",
+  "name": "binary-json-benchmark",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "msgpack-lite": "^0.1.13",
-    "ubjson": "0.0.8"
+    "msgpack-lite": "x.x.x",
+    "ubjson": "x.x.x",
+    "msgpack5": "x.x.x"
   }
 }
