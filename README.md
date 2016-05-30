@@ -1,4 +1,4 @@
-# binary json benchmark
+# Data transport benchmark
 
 A quick benchmark to test which is the fastest and the lightest.
 
@@ -11,40 +11,48 @@ A quick benchmark to test which is the fastest and the lightest.
 
 ## Results
 
-### json
+### uncompressed-json
 
-- Encode:		758		ms
-- Decode:		738		ms
-- Size:			145		bytes
+- Encode:	375	ms
+- Decode:	381	ms
+- Size:		284	bytes
 
-[x] Browser support
+---
 
------------------------------------
+### uncompressed-msgpack
 
-### [msgpack-lite](https://github.com/kawanet/msgpack-lite)
+- Encode:	513	ms
+- Decode:	891	ms
+- Size:		188	bytes
 
-- Encode:		1555	ms
-- Decode:		1596	ms
-- Size:			81		bytes
+---
 
-[x] Browser support
+### uncompressed-protocol-buffers
 
------------------------------------
+- Encode:	462	ms
+- Decode:	111	ms
+- Size:		117	bytes
 
-### [msgpack5](https://github.com/mcollina/msgpack5) 
+---
 
-- Encode:		11396	ms
-- Decode:		10116	ms
-- Size:			81		bytes
+### snappy-json
 
-[x] Browser support
+- Encode:	497	ms
+- Decode:	379	ms
+- Size:		195	bytes
 
------------------------------------
+---
 
-### [ubjson](https://github.com/Sannis/ubjson) 
+### snappy-protocol-buffers
 
-- Encode:		5341	ms
-- Decode:		3218	ms
-- Size:			111		bytes
+- Encode:	557	ms
+- Decode:	214	ms
+- Size:		117	bytes
 
-[ ] Browser support
+---
+
+### snappy-msgpack
+
+- Encode:	666	ms
+- Decode:	900	ms
+- Size:		169	bytes
