@@ -1,5 +1,5 @@
 {
-  "name": "binary-json-benchmark",
+  "name": "buffer-zip-benchmarks",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "msgpack-lite": "x.x.x",
-    "ubjson": "x.x.x",
-    "msgpack5": "x.x.x"
+    "protocol-buffers": "^3.1.6",
+    "snappy": "5.0.x"
   }
 }

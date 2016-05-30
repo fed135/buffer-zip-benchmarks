@@ -1,5 +1,5 @@
 /**
- * MSGPACK - lite
+ * Uncompressed msgpack
  */
 
 'use strict';
@@ -10,17 +10,17 @@ var msgpack = require('msgpack-lite');
 
 /* Methods -------------------------------------------------------------------*/
 
-function encode(obj) {
+function deflate(obj) {
 	return msgpack.encode(obj);
 }
 
-function decode(obj) {
+function inflate(obj) {
 	return msgpack.decode(obj);
 }
 
 /* Exports -------------------------------------------------------------------*/
 
 module.exports = {
-	encode: encode,
-	decode: decode
+	deflate: deflate,
+	inflate: inflate
 };

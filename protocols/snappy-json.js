@@ -1,26 +1,26 @@
 /**
- * MSGPACK5
+ * JSON + snappy
  */
 
 'use strict';
 
 /* Requires ------------------------------------------------------------------*/
 
-var pack = require('msgpack5')();
+var snappy = require('snappy');
 
 /* Methods -------------------------------------------------------------------*/
 
-function encode(obj) {
-	return pack.encode(obj);
+function deflate(obj) {
+	return snappy.compressSync(JSON.stringify(obj));
 }
 
-function decode(obj) {
-	return pack.decode(obj);
+function inflate(obj) {
+	return JSON.parse(snappy.uncompressSync(obj).toString());
 }
 
 /* Exports -------------------------------------------------------------------*/
 
 module.exports = {
-	encode: encode,
-	decode: decode
+	deflate: deflate,
+	inflate: inflate
 };

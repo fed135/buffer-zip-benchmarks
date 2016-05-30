@@ -1,22 +1,22 @@
 /**
- * JSON
+ * Uncompressed JSON
  */
 
 'use strict';
 
 /* Methods -------------------------------------------------------------------*/
 
-function encode(obj) {
+function deflate(obj) {
 	return new Buffer(JSON.stringify(obj));
 }
 
-function decode(obj) {
+function inflate(obj) {
 	return JSON.parse(obj.toString());
 }
 
 /* Exports -------------------------------------------------------------------*/
 
 module.exports = {
-	encode: encode,
-	decode: decode
+	deflate: deflate,
+	inflate: inflate
 };
